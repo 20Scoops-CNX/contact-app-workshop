@@ -1,5 +1,6 @@
 package com.tweentyscoops.contactworkshop.ui.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,48 +9,78 @@ import android.widget.TextView;
 
 import com.tweentyscoops.contactworkshop.R;
 import com.tweentyscoops.contactworkshop.model.ContactModel;
+import com.tweentyscoops.contactworkshop.ui.form.FormContactActivity;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
 import com.tweentyscoops.contactworkshop.utils.ImageLoader;
 
+import static com.tweentyscoops.contactworkshop.ui.form.FormContactActivity.KEY_CONTACT_MODEL;
+import static com.tweentyscoops.contactworkshop.ui.form.FormContactActivity.KEY_MODE_EDIT;
+
 public class DetailActivity extends AppCompatActivity {
+
+    public static final int REQUEST_EDIT = 1005;
+
     private TextView tvName, tvTel, tvEmail, tvWebsite;
-    private ImageView ivMap, ivEdit;
+    private ImageView ivMap;
+    private ContactModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        initView();
-        setView();
+        setupInstance();
+        setupView();
+        initData(model);
     }
 
-    private void initView() {
+    private void setupInstance() {
+        model = getIntent().getParcelableExtra(MainActivity.KEY_CONTACT_DETAIL);
+    }
+
+    private void setupView() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(model.getName());
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         tvName = findViewById(R.id.tvDetailName);
         tvTel = findViewById(R.id.tvDetailTel);
         tvEmail = findViewById(R.id.tvDetailEmail);
         tvWebsite = findViewById(R.id.tvDetailWebsite);
         ivMap = findViewById(R.id.ivMap);
+        findViewById(R.id.ivEdt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, FormContactActivity.class);
+                intent.putExtra(KEY_MODE_EDIT, true);
+                intent.putExtra(KEY_CONTACT_MODEL, model);
+                startActivityForResult(intent, REQUEST_EDIT);
+            }
+        });
     }
 
-    private void setView() {
-        ContactModel model = getIntent().getExtras().getParcelable(MainActivity.KEY_CONTACT_DETAIL);
-        String name = model.getName();
-        String tel = model.getPhoneNumber();
-        String email = model.getEmail();
-        String website = model.getWebsite();
+    private void initData(ContactModel model) {
+        tvName.setText(model.getName());
+        tvTel.setText(model.getPhoneNumber());
+        tvEmail.setText(model.getEmail());
+        tvWebsite.setText(model.getWebsite());
+        ImageLoader.url(ivMap, "http://maps.google.com/maps/api/staticmap?center=" +
+                this.model.getLat() + "," + this.model.getLng() + "&zoom=14&size=300x300&sensor=false");
+    }
 
-        tvName.setText(name);
-        tvTel.setText(tel);
-        tvEmail.setText(email);
-        tvWebsite.setText(website);
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
-        ImageLoader.url(ivMap, "http://maps.google.com/maps/api/staticmap?center=" + model.getLat() + "," + model.getLng() + "&zoom=14&size=300x300&sensor=false");
-
-//        ivEdit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //todo add action intent to edit here use data in model
-//            }
-//        });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_EDIT && resultCode == RESULT_OK) {
+            ContactModel model = data.getParcelableExtra(MainActivity.KEY_CONTACT_MODEL);
+            if (model != null) {
+                initData(model);
+            }
+        }
     }
 }
