@@ -28,8 +28,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     // support android
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
+    //noinspection GradleDependency
+    implementation 'com.android.support:appcompat-v7:27.0.2'
+    //noinspection GradleDependency
+    implementation 'com.android.support:design:27.0.2'
 
     // request http
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -49,5 +51,6 @@ dependencies {
     // request permission
     implementation 'com.karumi:dexter:4.2.0'
 
+    // facebook login
     implementation 'com.facebook.android:facebook-login:4.31.0'
 }
