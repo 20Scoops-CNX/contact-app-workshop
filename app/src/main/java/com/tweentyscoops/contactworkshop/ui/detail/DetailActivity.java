@@ -45,11 +45,11 @@ public class DetailActivity extends AppCompatActivity {
 
         ImageLoader.url(ivMap, "http://maps.google.com/maps/api/staticmap?center=" + model.getLat() + "," + model.getLng() + "&zoom=1&size=300x300&sensor=false");
 
-        ivEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //todo add action intent to edit here use data in model
-            }
-        });
+//        ivEdit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //todo add action intent to edit here use data in model
+//            }
+//        });
     }
 }
