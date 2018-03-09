@@ -30,16 +30,21 @@ public class RegisterActivity extends AppCompatActivity {
         findViewById(R.id.btnSummit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editTextEmail.getText().toString().trim().length() == 0) {
-                    DialogUtil.showDialogMessage(this, R.string.check_email);
-                } else if (editTextPassword.getText().toString().trim().length() == 0) {
-                    DialogUtil.showDialogMessage(this, R.string.check_password);
-                } else if (!editTextPassword.getText().toString().equals(editTextRePassword.getText().toString())) {
-                    DialogUtil.showDialogMessage(this, R.string.check_RePassword);
-                } else {
-                    // TODO : request APIs register
-                }
+                handleField();
             }
         });
     }
+    private void handleField(){
+        if (editTextEmail.getText().toString().trim().length() == 0) {
+            DialogUtil.showDialogMessage(this , R.string.check_email);
+        } else if (editTextPassword.getText().toString().trim().length() == 0) {
+            DialogUtil.showDialogMessage(this, R.string.check_password);
+        } else if (!editTextPassword.getText().toString().equals(editTextRePassword.getText().toString())) {
+            DialogUtil.showDialogMessage(this, R.string.check_RePassword);
+        } else {
+            // TODO : request APIs register
+        }
+    }
+
+
 }
