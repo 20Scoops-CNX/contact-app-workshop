@@ -11,4 +11,6 @@
     <string name="require_field_email">Require field email</string>
     <string name="require_field_phone_number">Require field phone number</string>
     <string name="require_field_website">Require field website</string>
+    <string name="create_contact">Create Contact</string>
+    <string name="empty_contact">Ohh…your contact is empty!\nPlease add new contact.</string>
 </resources>

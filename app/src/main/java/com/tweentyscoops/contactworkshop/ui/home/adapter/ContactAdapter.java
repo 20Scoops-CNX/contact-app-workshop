@@ -14,6 +14,8 @@ import java.util.List;
 public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> implements ContactViewHolder.ContactViewHolderListener {
 
     public interface ContactAdapterListener {
+        void onAddedItemContact();
+
         void onItemClick(String phoneNumber);
 
         void onItemClick(ContactModel model);
@@ -34,6 +36,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> impl
     public void addItem(ContactModel model) {
         items.add(0, model);
         notifyItemChanged(0);
+        if (listener != null) {
+            listener.onAddedItemContact();
+        }
     }
 
     @NonNull

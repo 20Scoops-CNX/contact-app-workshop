@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.Co
     public static final String KEY_CONTACT_MODEL = "contact_data";
 
     private ContactAdapter adapter;
+    private View viewEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.Co
     }
 
     private void setupView() {
+        viewEmpty = findViewById(R.id.viewEmpty);
         RecyclerView rvContact = findViewById(R.id.rvContact);
         rvContact.setLayoutManager(new LinearLayoutManager(this));
         rvContact.setAdapter(adapter);
@@ -59,6 +61,11 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.Co
                 adapter.addItem(model);
             }
         }
+    }
+
+    @Override
+    public void onAddedItemContact() {
+        viewEmpty.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override

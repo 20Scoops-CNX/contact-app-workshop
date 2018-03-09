@@ -32,13 +32,20 @@ public class FormContactActivity extends AppCompatActivity {
         setupView();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     private void setInstance() {
         isModeEdit = getIntent().getBooleanExtra(KEY_MODE_EDIT, false);
     }
 
     private void setupView() {
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.create_contact);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);

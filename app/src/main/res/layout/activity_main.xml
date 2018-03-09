@@ -12,6 +12,20 @@
         android:layout_height="match_parent"
         android:clipToPadding="false" />
 
+    <FrameLayout
+        android:id="@+id/viewEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="@string/empty_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAddContact"
         android:layout_width="wrap_content"
