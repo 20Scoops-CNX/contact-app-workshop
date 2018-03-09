@@ -26,6 +26,7 @@ import com.tweentyscoops.contactworkshop.BuildConfig;
 import com.tweentyscoops.contactworkshop.R;
 import com.tweentyscoops.contactworkshop.model.ContactModel;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
+import com.tweentyscoops.contactworkshop.ui.map.MapActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
 import com.tweentyscoops.contactworkshop.utils.FileUtil;
 import com.tweentyscoops.contactworkshop.utils.ImageLoader;
@@ -42,8 +43,12 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
 
     public static final String KEY_MODE_EDIT = "mode_edit";
     public static final String KEY_CONTACT_MODEL = "contact_model";
+    private static final int REQUEST_CODE_ADD_LOCATION = 1000;
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int REQUEST_PICK_PHOTO = 2;
+
+    private String latitude="";
+    private String longtitude="";
 
     private String mCurrentPhotoPath;
     private TextInputEditText etName;
@@ -82,6 +87,13 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
         etEmail = findViewById(R.id.etEmail);
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
         etWebsite = findViewById(R.id.etWebsite);
+        findViewById(R.id.btnLocation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FormContactActivity.this, MapActivity.class);
+                intent.putExtra(FormContactActivity.KEY_MODE_EDIT, false);
+                startActivityForResult(intent, REQUEST_CODE_ADD_LOCATION);}
+        });
         findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,8 +151,10 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
             model.setName(name);
             // TODO : get address, lat and lng by location
             model.setAddress("address");
-            model.setLat("lat");
-            model.setLng("lng");
+            if (latitude.trim().length()!=0){
+                model.setLat(latitude);
+                model.setLng(longtitude);
+            }
             model.setPhoneNumber(phoneNumber);
             model.setEmail(email);
             // TODO : get url image before upload image
@@ -185,6 +199,16 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
                 e.printStackTrace();
             }
             ImageLoader.url(imgProfile, mCurrentPhotoPath);
+        }
+        if (requestCode == REQUEST_CODE_ADD_LOCATION && resultCode == RESULT_OK) {
+            ContactModel model = getContactModel();
+            String lat = data.getStringExtra(MapActivity.KEY_LOCATION_LAT);
+            String lng = data.getStringExtra(MapActivity.KEY_LOCATION_LNG);
+            if (model != null){
+                if (lat.trim().length() != 0 && lng.trim().length() != 0) {
+                    latitude = lat;
+                    longtitude = lng;
+                }}
         }
     }
 
@@ -260,4 +284,5 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
         mediaScanIntent.setData(contentUri);
         sendBroadcast(mediaScanIntent);
     }
+
 }

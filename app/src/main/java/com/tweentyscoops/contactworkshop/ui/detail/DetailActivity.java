@@ -43,7 +43,7 @@ public class DetailActivity extends AppCompatActivity {
         tvEmail.setText(email);
         tvWebsite.setText(website);
 
-        ImageLoader.url(ivMap, "http://maps.google.com/maps/api/staticmap?center=" + model.getLat() + "," + model.getLng() + "&zoom=1&size=300x300&sensor=false");
+        ImageLoader.url(ivMap, "http://maps.google.com/maps/api/staticmap?center=" + model.getLat() + "," + model.getLng() + "&zoom=14&size=300x300&sensor=false");
 
 //        ivEdit.setOnClickListener(new View.OnClickListener() {
 //            @Override
