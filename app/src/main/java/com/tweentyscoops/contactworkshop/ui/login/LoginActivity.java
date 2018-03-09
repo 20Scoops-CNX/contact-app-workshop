@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,10 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.tweentyscoops.contactworkshop.R;
+import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
 import com.tweentyscoops.contactworkshop.ui.register.RegisterActivity;
+import com.tweentyscoops.contactworkshop.utils.DialogUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Arrays;
@@ -27,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView textRegister;
     private LoginButton btnLogin;
     private CallbackManager callbackManager;
+    private EditText editTextEmail, editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +79,9 @@ public class LoginActivity extends AppCompatActivity {
         buttonLoginEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, LoginEmailActivity.class);
-                startActivity(intent);
+                handleField();
             }
         });
-
         textRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +96,8 @@ public class LoginActivity extends AppCompatActivity {
         textRegister = (TextView) findViewById(R.id.register);
         callbackManager = CallbackManager.Factory.create();
         btnLogin = (LoginButton) findViewById(R.id.login_fb);
+        editTextEmail = findViewById(R.id.signup_input_email);
+        editTextPassword = findViewById(R.id.signup_input_Repassword);
     }
 
     @Override
@@ -104,4 +109,13 @@ public class LoginActivity extends AppCompatActivity {
     //TODO checkLoginFacebook retrofit()
     private void setcheckLoginFacebook() {}
 
+    private void handleField(){
+        if (editTextEmail.getText().toString().trim().length() == 0) {
+            DialogUtil.showDialogMessage(this , R.string.check_email);
+        } else if (editTextPassword.getText().toString().trim().length() == 0) {
+            DialogUtil.showDialogMessage(this, R.string.check_password);
+        } else {
+            //TODO checkLoginEmail
+        }
+    }
 }
