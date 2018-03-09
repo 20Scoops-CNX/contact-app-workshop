@@ -16,4 +16,7 @@
     <string name="getlocation">GetLocation</string>
     <string name="btn_done">Done</string>
     <string name="btn_back">Back</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="please_try_again">Some thing error, Please try again</string>
 </resources>

@@ -46,6 +46,6 @@ dependencies {
     //google map
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
 
-    //dexter request permission
+    // request permission
     implementation 'com.karumi:dexter:4.2.0'
 }
