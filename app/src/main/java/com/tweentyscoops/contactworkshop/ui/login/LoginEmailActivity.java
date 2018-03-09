@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.tweentyscoops.contactworkshop.R;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
-import com.tweentyscoops.contactworkshop.ui.register.RegisterActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
 
 public class LoginEmailActivity extends AppCompatActivity {
@@ -51,6 +48,7 @@ public class LoginEmailActivity extends AppCompatActivity {
     private void dialogEditTextEmail(){
         DialogUtil.showDialogMessage(this, R.string.check_email);
     }
+
     private  void dialogEditTextPassword(){
         DialogUtil.showDialogMessage(this, R.string.check_password);
     }

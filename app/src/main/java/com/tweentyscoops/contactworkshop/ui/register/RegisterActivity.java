@@ -1,22 +1,16 @@
 package com.tweentyscoops.contactworkshop.ui.register;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.tweentyscoops.contactworkshop.R;
-import com.tweentyscoops.contactworkshop.model.ContactModel;
-import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
 
 public class RegisterActivity extends AppCompatActivity {
-
     private Button buttonSummit;
     private EditText editTextEmail,editTextPassword,editTextRePassword;
 
@@ -56,13 +50,13 @@ public class RegisterActivity extends AppCompatActivity {
     private void dialogeditTextEmail(){
         DialogUtil.showDialogMessage(this, R.string.check_email);
     }
+
     private  void dialogeditTextPassword(){
         DialogUtil.showDialogMessage(this, R.string.check_password);
     }
     private  void dialogcheck_RePassword(){
         DialogUtil.showDialogMessage(this, R.string.check_RePassword);
     }
-
 
     private void setID() {
         editTextEmail = (EditText) findViewById(R.id.signup_input_email);
@@ -86,7 +80,4 @@ public class RegisterActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
-
-
 }
