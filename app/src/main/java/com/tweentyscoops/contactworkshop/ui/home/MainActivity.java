@@ -1,0 +1,61 @@
+package com.tweentyscoops.contactworkshop.ui.home;
+
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import com.tweentyscoops.contactworkshop.R;
+import com.tweentyscoops.contactworkshop.model.ContactModel;
+import com.tweentyscoops.contactworkshop.ui.form.FormContactActivity;
+import com.tweentyscoops.contactworkshop.ui.home.adapter.ContactAdapter;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final int REQUEST_CODE_ADD_CONTACT = 1002;
+    public static final String KEY_CONTACT_MODEL = "contact_data";
+
+    private ContactAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        setupInstance();
+        setupView();
+        // TODO : request APIs get list contact
+    }
+
+    private void setupInstance() {
+        adapter = new ContactAdapter();
+    }
+
+    private void setupView() {
+        RecyclerView rvContact = findViewById(R.id.rvContact);
+        rvContact.setLayoutManager(new LinearLayoutManager(this));
+        rvContact.setAdapter(adapter);
+        FloatingActionButton fabAddContact = findViewById(R.id.fabAddContact);
+        fabAddContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, FormContactActivity.class);
+                intent.putExtra(FormContactActivity.KEY_MODE_EDIT, false);
+                startActivityForResult(intent, REQUEST_CODE_ADD_CONTACT);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_ADD_CONTACT && resultCode == RESULT_OK) {
+            ContactModel model = data.getParcelableExtra(KEY_CONTACT_MODEL);
+            if (model != null) {
+                adapter.addItem(model);
+            }
+        }
+    }
+}
