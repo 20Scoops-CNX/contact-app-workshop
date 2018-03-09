@@ -12,13 +12,5 @@
     <string name="require_field_phone_number">Require field phone number</string>
     <string name="require_field_website">Require field website</string>
     <string name="create_contact">Create Contact</string>
-    <string name="register">Register</string>
-    <string name="login_email">Login with email</string>
-    <string name="detail">Detail</string>
     <string name="empty_contact">Ohh…your contact is empty!\nPlease add new contact.</string>
-    <string name="facebook_app_id">1892303904114046</string>
-    <string name="fb_login_protocol_scheme">fb1892303904114046</string>
-    <string name="check_email">E-mail should not empty</string>
-    <string name="check_password">Password should not empty</string>
-    <string name="check_RePassword">Invalid Re-password</string>
 </resources>
