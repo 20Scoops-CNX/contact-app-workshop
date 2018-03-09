@@ -23,6 +23,14 @@ public class LoginEmailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_email);
         setID();
         setOnClick();
+        setupView();
+    }
+
+    private void setupView() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.login_email);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void setOnClick() {
@@ -30,9 +38,9 @@ public class LoginEmailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(editTextEmail.getText().toString().equals("")){
-                    dialogeditTextEmail();
+                    dialogEditTextEmail();
                 }else if( editTextPassword.getText().toString().equals("")) {
-                    dialogeditTextPassword();
+                    dialogEditTextPassword();
                 } else {
                     checkLoginEmail();
                 }
@@ -40,10 +48,10 @@ public class LoginEmailActivity extends AppCompatActivity {
         });
     }
 
-    private void dialogeditTextEmail(){
+    private void dialogEditTextEmail(){
         DialogUtil.showDialogMessage(this, R.string.check_email);
     }
-    private  void dialogeditTextPassword(){
+    private  void dialogEditTextPassword(){
         DialogUtil.showDialogMessage(this, R.string.check_password);
     }
 

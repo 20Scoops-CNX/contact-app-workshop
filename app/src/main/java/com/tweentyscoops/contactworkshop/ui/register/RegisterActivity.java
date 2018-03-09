@@ -3,13 +3,16 @@ package com.tweentyscoops.contactworkshop.ui.register;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import com.tweentyscoops.contactworkshop.R;
+import com.tweentyscoops.contactworkshop.model.ContactModel;
+import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -23,6 +26,14 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         setID();
         setOnClick();
+        setupView();
+    }
+
+    private void setupView() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.register);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void setOnClick() {
