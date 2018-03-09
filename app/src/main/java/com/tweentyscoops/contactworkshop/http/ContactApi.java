@@ -9,4 +9,10 @@ public interface ContactApi {
     @FormUrlEncoded
     @POST("login")
     Call<String> login();
+
+    @FormUrlEncoded
+    @POST("register")
+    Call<String> register();
+
+
 }
