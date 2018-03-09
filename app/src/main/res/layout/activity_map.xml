@@ -31,13 +31,13 @@
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/btnDone"
-            android:text="Done"
+            android:text="@string/btn_done"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:ignore="NestedWeights" />
         <Button
-            android:text="Back"
+            android:text="@string/btn_back"
             android:id="@+id/btnBack"
             android:layout_weight="1"
             android:layout_width="0dp"

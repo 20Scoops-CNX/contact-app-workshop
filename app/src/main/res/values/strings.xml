@@ -14,4 +14,6 @@
     <string name="create_contact">Create Contact</string>
     <string name="empty_contact">Ohh…your contact is empty!\nPlease add new contact.</string>
     <string name="getlocation">GetLocation</string>
+    <string name="btn_done">Done</string>
+    <string name="btn_back">Back</string>
 </resources>

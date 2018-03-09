@@ -53,6 +53,9 @@
             android:name="com.tweentyscoops.contactworkshop.ui.map.MapActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.tweentyscoops.contactworkshop.ui.detail.DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.karumi.dexter.DexterActivity"
             android:theme="@style/Dexter.Internal.Theme.Transparent" />
         <activity

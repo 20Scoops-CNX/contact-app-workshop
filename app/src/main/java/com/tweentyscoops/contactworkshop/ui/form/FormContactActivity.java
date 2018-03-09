@@ -28,6 +28,9 @@ public class FormContactActivity extends AppCompatActivity {
     private TextInputEditText etEmail;
     private TextInputEditText etWebsite;
 
+    private String latitude="";
+    private String longtitude="";
+
     private boolean isModeEdit;
 
     @Override
@@ -103,8 +106,8 @@ public class FormContactActivity extends AppCompatActivity {
             String lng = data.getStringExtra(MapActivity.KEY_LOCATION_LNG);
             if (model != null){
             if (lat.trim().length() != 0 && lng.trim().length() != 0) {
-                model.setLat(lat);
-                model.setLng(lng);
+                latitude = lat;
+                longtitude = lng;
             }}
         }
     }
@@ -131,8 +134,10 @@ public class FormContactActivity extends AppCompatActivity {
             model.setName(name);
             // TODO : get address, lat and lng by location
             model.setAddress("address");
-            model.setLat("lat");
-            model.setLng("lng");
+            if (latitude.trim().length()!=0){
+                model.setLat(latitude);
+                model.setLng(longtitude);
+            }
             model.setPhoneNumber(phoneNumber);
             model.setEmail(email);
             // TODO : get url image before upload image
