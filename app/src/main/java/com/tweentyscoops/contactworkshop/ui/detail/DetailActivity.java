@@ -1,5 +1,7 @@
 package com.tweentyscoops.contactworkshop.ui.detail;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -29,10 +31,11 @@ public class DetailActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvDetailEmail);
         tvWebsite = findViewById(R.id.tvDetailWebsite);
         ivMap = findViewById(R.id.ivMap);
+        ivEdit = findViewById(R.id.tvEdt);
     }
 
     private void setView() {
-        ContactModel model = getIntent().getExtras().getParcelable(MainActivity.KEY_CONTACT_DETAIL);
+        final ContactModel model = getIntent().getExtras().getParcelable(MainActivity.KEY_CONTACT_DETAIL);
         String name = model.getName();
         String tel = model.getPhoneNumber();
         String email = model.getEmail();
@@ -45,11 +48,19 @@ public class DetailActivity extends AppCompatActivity {
 
         ImageLoader.url(ivMap, "http://maps.google.com/maps/api/staticmap?center=" + model.getLat() + "," + model.getLng() + "&zoom=14&size=300x300&sensor=false");
 
-//        ivEdit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //todo add action intent to edit here use data in model
-//            }
-//        });
+        tvTel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", model.getPhoneNumber(), null));
+                startActivity(intent);
+            }
+        });
+
+        ivEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }

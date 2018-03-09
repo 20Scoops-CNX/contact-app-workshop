@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.register.RegisterActivity">
+    tools:context="com.tweentyscoops.contactworkshop.ui.login.LoginEmailActivity">
 
-
+    
     <android.support.design.widget.TextInputLayout
         android:layout_below="@+id/toolBar"
         android:id="@+id/signup_input_layout_email"
@@ -37,30 +37,15 @@
             android:hint="password"/>
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_below="@+id/signup_input_layout_password"
-        android:id="@+id/signup_input_layout_Repassword"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp">
-        <EditText
-            android:id="@+id/signup_input_Repassword"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Re-password"/>
-    </android.support.design.widget.TextInputLayout>
-
     <Button
         android:textAllCaps="false"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="90dp"
         android:id="@+id/btnSummit"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/signup_input_layout_Repassword"
+        android:layout_below="@+id/signup_input_layout_email"
         android:layout_centerHorizontal="true"
         android:text="Submit" />
+
 
 </RelativeLayout>

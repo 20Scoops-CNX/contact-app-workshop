@@ -85,4 +85,9 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.Co
         intent.putExtra(KEY_CONTACT_DETAIL,model);
         startActivity(intent);
     }
+
+    public void onBackPressed() {
+        finish();
+    }
+
 }

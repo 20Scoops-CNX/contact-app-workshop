@@ -19,4 +19,14 @@
     <string name="add_photo">Add Photo</string>
     <string name="permission_denied">Permission denied</string>
     <string name="please_try_again">Some thing error, Please try again</string>
+    <string name="login_email">Login</string>
+    <string name="check_email">Check Email</string>
+    <string name="check_password">Check Password</string>
+    <string name="register">Register</string>
+    <string name="check_RePassword">Check Re-Password</string>
+    <string name="detail">Web</string>
+    <string name="fill_name">Name :</string>
+    <string name="fill_tel">Telephone:</string>
+    <string name="fill_email">E-mail:</string>
+    <string name="fill_website">Website:</string>
 </resources>
