@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ContactModel implements Parcelable{
+public class ContactModel implements Parcelable {
 
     @SerializedName("name")
     private String name;
@@ -23,6 +23,10 @@ public class ContactModel implements Parcelable{
     private String lng;
     @SerializedName("address")
     private String address;
+
+    public ContactModel() {
+
+    }
 
     protected ContactModel(Parcel in) {
         name = in.readString();

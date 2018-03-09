@@ -11,10 +11,20 @@ import com.tweentyscoops.contactworkshop.model.ContactModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
+public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> implements ContactViewHolder.ContactViewHolderListener {
+
+    public interface ContactAdapterListener {
+        void onItemClick(String phoneNumber);
+
+        void onItemClick(ContactModel model);
+    }
 
     private List<ContactModel> items = new ArrayList<>();
+    private ContactAdapterListener listener;
 
+    public void setListener(ContactAdapterListener listener) {
+        this.listener = listener;
+    }
 
     public void setItems(List<ContactModel> items) {
         this.items = items;
@@ -36,10 +46,25 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         holder.onBindData(items.get(position));
+        holder.setListener(this);
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        if (listener != null) {
+            listener.onItemClick(items.get(position).getPhoneNumber());
+        }
+    }
+
+    @Override
+    public void onViewMoreDetail(int position) {
+        if (listener != null) {
+            listener.onItemClick(items.get(position));
+        }
     }
 }

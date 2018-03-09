@@ -1,6 +1,7 @@
 package com.tweentyscoops.contactworkshop.ui.home;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import com.tweentyscoops.contactworkshop.model.ContactModel;
 import com.tweentyscoops.contactworkshop.ui.form.FormContactActivity;
 import com.tweentyscoops.contactworkshop.ui.home.adapter.ContactAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ContactAdapter.ContactAdapterListener {
 
     private static final int REQUEST_CODE_ADD_CONTACT = 1002;
     public static final String KEY_CONTACT_MODEL = "contact_data";
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupInstance() {
         adapter = new ContactAdapter();
+        adapter.setListener(this);
     }
 
     private void setupView() {
@@ -57,5 +59,16 @@ public class MainActivity extends AppCompatActivity {
                 adapter.addItem(model);
             }
         }
+    }
+
+    @Override
+    public void onItemClick(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(ContactModel model) {
+        // TODO : start details contact activity
     }
 }
