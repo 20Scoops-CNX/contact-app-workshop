@@ -1,6 +1,7 @@
 package com.tweentyscoops.contactworkshop.ui.detail;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.tweentyscoops.contactworkshop.R;
 import com.tweentyscoops.contactworkshop.model.ContactModel;
 import com.tweentyscoops.contactworkshop.ui.form.FormContactActivity;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
+import com.tweentyscoops.contactworkshop.ui.webview.WebViewActivity;
 import com.tweentyscoops.contactworkshop.utils.ImageLoader;
 
 import static com.tweentyscoops.contactworkshop.ui.form.FormContactActivity.KEY_CONTACT_MODEL;
@@ -47,7 +49,25 @@ public class DetailActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvDetailEmail);
         tvWebsite = findViewById(R.id.tvDetailWebsite);
         ivMap = findViewById(R.id.ivMap);
-        findViewById(R.id.ivEdt).setOnClickListener(new View.OnClickListener() {
+
+        tvTel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", tvTel.getText().toString(), null));
+                startActivity(intent);
+            }
+        });
+
+        tvWebsite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this , WebViewActivity.class);
+                intent.putExtra(WebViewActivity.KEY_WEB_VIEW , tvWebsite.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.tvEdt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailActivity.this, FormContactActivity.class);
