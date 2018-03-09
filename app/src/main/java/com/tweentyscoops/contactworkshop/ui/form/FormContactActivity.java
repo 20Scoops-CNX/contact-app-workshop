@@ -56,8 +56,8 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
     private ImageView imgProfile;
 
     private boolean isModeEdit;
-    private String lat;
-    private String lng;
+    private String lat ;
+    private String lng ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,15 +195,8 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
             ImageLoader.url(imgProfile, mCurrentPhotoPath);
         }
         if (requestCode == REQUEST_CODE_ADD_LOCATION && resultCode == RESULT_OK) {
-            ContactModel model = getContactModel();
-            String lat = data.getStringExtra(MapActivity.KEY_LOCATION_LAT);
-            String lng = data.getStringExtra(MapActivity.KEY_LOCATION_LNG);
-            if (model != null) {
-                if (lat.trim().length() != 0 && lng.trim().length() != 0) {
-                    this.lat = lat;
-                    this.lng = lng;
-                }
-            }
+            lat = data.getStringExtra(MapActivity.KEY_LOCATION_LAT);
+            lng = data.getStringExtra(MapActivity.KEY_LOCATION_LNG);
         }
     }
 
