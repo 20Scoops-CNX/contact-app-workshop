@@ -49,5 +49,5 @@ dependencies {
     // request permission
     implementation 'com.karumi:dexter:4.2.0'
 
-    implementation 'com.facebook.android:facebook-login:[4,5)'
+    implementation 'com.facebook.android:facebook-login:4.31.0'
 }

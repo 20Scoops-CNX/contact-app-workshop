@@ -19,6 +19,7 @@
     <string name="add_photo">Add Photo</string>
     <string name="permission_denied">Permission denied</string>
     <string name="please_try_again">Some thing error, Please try again</string>
+    <string name="cancel">CANCEL</string>
     <string name="login_email">Login</string>
     <string name="check_email">Check Email</string>
     <string name="check_password">Check Password</string>
@@ -29,4 +30,5 @@
     <string name="fill_tel">Telephone:</string>
     <string name="fill_email">E-mail:</string>
     <string name="fill_website">Website:</string>
+    <string name="facebook_app_id">1892303904114046</string>
 </resources>

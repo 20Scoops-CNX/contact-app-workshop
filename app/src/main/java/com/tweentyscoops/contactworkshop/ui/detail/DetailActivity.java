@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.tweentyscoops.contactworkshop.R;
 import com.tweentyscoops.contactworkshop.model.ContactModel;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
+import com.tweentyscoops.contactworkshop.ui.webview.WebViewActivity;
 import com.tweentyscoops.contactworkshop.utils.ImageLoader;
 
 public class DetailActivity extends AppCompatActivity {
@@ -36,22 +37,44 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setView() {
         final ContactModel model = getIntent().getExtras().getParcelable(MainActivity.KEY_CONTACT_DETAIL);
-        String name = model.getName();
-        String tel = model.getPhoneNumber();
-        String email = model.getEmail();
-        String website = model.getWebsite();
+        String name = null;
+        String tel = null;
+        String email = null;
+        String website = null;
+        String lat = null;
+        String lng = null;
+        if (model != null) {
+            name = model.getName();
+            tel = model.getPhoneNumber();
+            email = model.getEmail();
+            website = model.getWebsite();
+            lat =model.getLat();
+            lng = model.getLng();
+        }
 
         tvName.setText(name);
         tvTel.setText(tel);
         tvEmail.setText(email);
         tvWebsite.setText(website);
 
-        ImageLoader.url(ivMap, "http://maps.google.com/maps/api/staticmap?center=" + model.getLat() + "," + model.getLng() + "&zoom=14&size=300x300&sensor=false");
+        tvWebsite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, WebViewActivity.class);
+                intent.putExtra(WebViewActivity.KEY_WEB_VIEW , tvWebsite.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        ImageLoader.url(ivMap, "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=14&size=300x300&sensor=false");
 
         tvTel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", model.getPhoneNumber(), null));
+                Intent intent = null;
+                if (model != null) {
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", tvTel.getText().toString(), null));
+                }
                 startActivity(intent);
             }
         });
