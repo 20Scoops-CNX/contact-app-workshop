@@ -13,4 +13,5 @@
     <string name="require_field_website">Require field website</string>
     <string name="create_contact">Create Contact</string>
     <string name="empty_contact">Ohh…your contact is empty!\nPlease add new contact.</string>
+    <string name="getlocation">GetLocation</string>
 </resources>

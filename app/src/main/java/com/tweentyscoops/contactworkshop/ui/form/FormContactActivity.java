@@ -5,17 +5,23 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.View;
 
 import com.tweentyscoops.contactworkshop.R;
 import com.tweentyscoops.contactworkshop.model.ContactModel;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
+import com.tweentyscoops.contactworkshop.ui.map.MapActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
+
+import java.text.Normalizer;
+import java.util.Map;
 
 public class FormContactActivity extends AppCompatActivity {
 
     public static final String KEY_MODE_EDIT = "mode_edit";
     public static final String KEY_CONTACT_MODEL = "contact_model";
+    private static final int REQUEST_CODE_ADD_LOCATION = 1000;
 
     private TextInputEditText etName;
     private TextInputEditText etPhoneNumber;
@@ -52,6 +58,14 @@ public class FormContactActivity extends AppCompatActivity {
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
         etWebsite = findViewById(R.id.etWebsite);
         AppCompatButton btnSubmit = findViewById(R.id.btnSubmit);
+        AppCompatButton btnMapLocation = findViewById(R.id.btnLocation);
+        btnMapLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FormContactActivity.this, MapActivity.class);
+                intent.putExtra(FormContactActivity.KEY_MODE_EDIT, false);
+                startActivityForResult(intent, REQUEST_CODE_ADD_LOCATION);}
+        });
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +91,21 @@ public class FormContactActivity extends AppCompatActivity {
             etWebsite.setText(model.getWebsite());
             etPhoneNumber.setText(model.getPhoneNumber());
             etEmail.setText(model.getEmail());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_ADD_LOCATION && resultCode == RESULT_OK) {
+            ContactModel model = getContactModel();
+            String lat = data.getStringExtra(MapActivity.KEY_LOCATION_LAT);
+            String lng = data.getStringExtra(MapActivity.KEY_LOCATION_LNG);
+            if (model != null){
+            if (lat.trim().length() != 0 && lng.trim().length() != 0) {
+                model.setLat(lat);
+                model.setLng(lng);
+            }}
         }
     }
 

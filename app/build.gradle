@@ -41,4 +41,10 @@ dependencies {
 
     // image circle
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    //google map
+    implementation 'com.google.android.gms:play-services-maps:11.8.0'
+
+    //dexter request permission
+    implementation 'com.karumi:dexter:4.2.0'
 }
