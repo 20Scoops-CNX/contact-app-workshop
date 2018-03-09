@@ -16,6 +16,10 @@ public class DialogUtil {
     }
 
     public static void showDialogMessage(Context context, @StringRes int message) {
+        showDialogMessage(context, context.getString(message));
+    }
+
+    public static void showDialogMessage(Context context, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.error))
                 .setMessage(message)
