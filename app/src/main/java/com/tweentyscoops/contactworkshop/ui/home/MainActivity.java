@@ -78,4 +78,9 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.Co
     public void onItemClick(ContactModel model) {
         // TODO : start details contact activity
     }
+
+    public void onBackPressed() {
+        finish();
+    }
+
 }

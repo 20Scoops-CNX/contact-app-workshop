@@ -23,8 +23,8 @@ dependencies {
 
     // testing
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.activity_register:runner:1.0.1'
-    androidTestImplementation 'com.android.support.activity_register.espresso:espresso-core:3.0.1'
+    //androidTestImplementation 'com.android.support.activity_register:runner:1.0.1'
+    //androidTestImplementation 'com.android.support.activity_register.espresso:espresso-core:3.0.1'
 
     // support android
     implementation 'com.android.support:appcompat-v7:27.1.0'
@@ -41,4 +41,7 @@ dependencies {
 
     // image circle
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    implementation 'com.facebook.android:facebook-login:[4,5)'
+
 }
