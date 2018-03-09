@@ -18,7 +18,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> impl
 
         void onItemClick(String phoneNumber);
 
-        void onItemClick(ContactModel model);
+        void onItemClick(int position, ContactModel model);
     }
 
     private List<ContactModel> items = new ArrayList<>();
@@ -39,6 +39,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> impl
         if (listener != null) {
             listener.onAddedItemContact();
         }
+    }
+
+    public void updateItem(int positionItem, ContactModel model) {
+        items.set(positionItem, model);
+        notifyItemChanged(positionItem);
     }
 
     @NonNull
@@ -69,7 +74,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> impl
     @Override
     public void onViewMoreDetail(int position) {
         if (listener != null) {
-            listener.onItemClick(items.get(position));
+            listener.onItemClick(position, items.get(position));
         }
     }
 }

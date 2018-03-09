@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.tweentyscoops.contactworkshop.R;
@@ -19,11 +18,13 @@ import com.tweentyscoops.contactworkshop.ui.home.adapter.ContactAdapter;
 public class MainActivity extends AppCompatActivity implements ContactAdapter.ContactAdapterListener {
 
     private static final int REQUEST_CODE_ADD_CONTACT = 1002;
-    public static final String KEY_CONTACT_DETAIL  = "contact_detail";
+    private static final int REQUEST_CODE_DETAILS = 1003;
+    public static final String KEY_CONTACT_DETAIL = "contact_detail";
     public static final String KEY_CONTACT_MODEL = "contact_data";
 
     private ContactAdapter adapter;
     private View viewEmpty;
+    private int positionItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.Co
             if (model != null) {
                 adapter.addItem(model);
             }
+        } else if (requestCode == REQUEST_CODE_DETAILS && resultCode == RESULT_OK) {
+            ContactModel model = data.getParcelableExtra(KEY_CONTACT_MODEL);
+            if (model != null) {
+                adapter.updateItem(positionItem, model);
+            }
         }
     }
 
@@ -78,16 +84,14 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.Co
     }
 
     @Override
-    public void onItemClick(ContactModel model) {
-        // TODO : start details contact activity
-        Log.e("test value ",model.getLng());
-        Intent intent = new Intent(MainActivity.this , DetailActivity.class);
-        intent.putExtra(KEY_CONTACT_DETAIL,model);
-        startActivity(intent);
+    public void onItemClick(int position, ContactModel model) {
+        positionItem = position;
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        intent.putExtra(KEY_CONTACT_DETAIL, model);
+        startActivityForResult(intent, REQUEST_CODE_DETAILS);
     }
 
     public void onBackPressed() {
         finish();
     }
-
 }

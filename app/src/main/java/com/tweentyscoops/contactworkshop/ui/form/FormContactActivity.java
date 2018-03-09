@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -11,7 +12,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -30,6 +30,7 @@ import com.tweentyscoops.contactworkshop.ui.map.MapActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
 import com.tweentyscoops.contactworkshop.utils.FileUtil;
 import com.tweentyscoops.contactworkshop.utils.ImageLoader;
+import com.tweentyscoops.contactworkshop.utils.LocationUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,9 +48,6 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int REQUEST_PICK_PHOTO = 2;
 
-    private String latitude="";
-    private String longtitude="";
-
     private String mCurrentPhotoPath;
     private TextInputEditText etName;
     private TextInputEditText etPhoneNumber;
@@ -57,8 +55,9 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
     private TextInputEditText etWebsite;
     private ImageView imgProfile;
 
-    private File folder;
     private boolean isModeEdit;
+    private String lat ;
+    private String lng ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +91,8 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
             public void onClick(View v) {
                 Intent intent = new Intent(FormContactActivity.this, MapActivity.class);
                 intent.putExtra(FormContactActivity.KEY_MODE_EDIT, false);
-                startActivityForResult(intent, REQUEST_CODE_ADD_LOCATION);}
+                startActivityForResult(intent, REQUEST_CODE_ADD_LOCATION);
+            }
         });
         findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,19 +147,14 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
             DialogUtil.showDialogMessage(this, R.string.require_field_website);
             return null;
         } else {
-            ContactModel model = new ContactModel();
+            final ContactModel model = new ContactModel();
             model.setName(name);
-            // TODO : get address, lat and lng by location
-            model.setAddress("address");
-            if (latitude.trim().length()!=0){
-                model.setLat(latitude);
-                model.setLng(longtitude);
-            }
             model.setPhoneNumber(phoneNumber);
             model.setEmail(email);
+            model.setWebsite(website);
             // TODO : get url image before upload image
             model.setImageUrl("");
-            model.setWebsite(website);
+            checkLocation(model);
             return model;
         }
     }
@@ -180,7 +175,6 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             ImageLoader.url(imgProfile, mCurrentPhotoPath);
             galleryAddPic();
-            Log.d("POND", mCurrentPhotoPath);
         } else if (requestCode == REQUEST_PICK_PHOTO && resultCode == Activity.RESULT_OK) {
             if (data == null) {
                 DialogUtil.showDialogMessage(this, R.string.please_try_again);
@@ -201,14 +195,31 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
             ImageLoader.url(imgProfile, mCurrentPhotoPath);
         }
         if (requestCode == REQUEST_CODE_ADD_LOCATION && resultCode == RESULT_OK) {
-            ContactModel model = getContactModel();
-            String lat = data.getStringExtra(MapActivity.KEY_LOCATION_LAT);
-            String lng = data.getStringExtra(MapActivity.KEY_LOCATION_LNG);
-            if (model != null){
-                if (lat.trim().length() != 0 && lng.trim().length() != 0) {
-                    latitude = lat;
-                    longtitude = lng;
-                }}
+            lat = data.getStringExtra(MapActivity.KEY_LOCATION_LAT);
+            lng = data.getStringExtra(MapActivity.KEY_LOCATION_LNG);
+        }
+    }
+
+    private void checkLocation(final ContactModel model) {
+        if (lat.trim().length() != 0 && lng.trim().length() != 0) {
+            model.setLat(lat);
+            model.setLng(lng);
+            Location location = new Location("loc");
+            location.setLatitude(Double.parseDouble(lat));
+            location.setLongitude(Double.parseDouble(lng));
+            LocationUtil.reverseGeocoding(this, location, new LocationUtil.ReverseGeocodingCallback() {
+                @Override
+                public void onReverseSuccess(String address) {
+                    model.setAddress(address);
+                }
+
+                @Override
+                public void onReverseError() {
+                    model.setAddress("-");
+                }
+            });
+        } else {
+            model.setAddress("-");
         }
     }
 
@@ -267,7 +278,7 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @SuppressLint("SimpleDateFormat")
     private File createImageFile() throws IOException {
-        folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES
+        File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES
                 + "/" + getString(R.string.app_name));
         if (!folder.isDirectory()) folder.mkdir();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -284,5 +295,4 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
         mediaScanIntent.setData(contentUri);
         sendBroadcast(mediaScanIntent);
     }
-
 }
