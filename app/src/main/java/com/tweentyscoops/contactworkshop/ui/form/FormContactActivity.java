@@ -1,18 +1,27 @@
 package com.tweentyscoops.contactworkshop.ui.form;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+import android.widget.Toast;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.tweentyscoops.contactworkshop.R;
 import com.tweentyscoops.contactworkshop.model.ContactModel;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
 
-public class FormContactActivity extends AppCompatActivity {
+import java.util.List;
+
+public class FormContactActivity extends AppCompatActivity implements DialogUtil.MenuAddPhotoListener {
 
     public static final String KEY_MODE_EDIT = "mode_edit";
     public static final String KEY_CONTACT_MODEL = "contact_model";
@@ -51,8 +60,7 @@ public class FormContactActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
         etWebsite = findViewById(R.id.etWebsite);
-        AppCompatButton btnSubmit = findViewById(R.id.btnSubmit);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO : request APIs insert/update contact
@@ -63,6 +71,12 @@ public class FormContactActivity extends AppCompatActivity {
                     setResult(RESULT_OK, intent);
                     finish();
                 }
+            }
+        });
+        findViewById(R.id.imgProfile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogUtil.showDialogChooseImage(FormContactActivity.this, FormContactActivity.this);
             }
         });
         if (isModeEdit) {
@@ -111,5 +125,52 @@ public class FormContactActivity extends AppCompatActivity {
             model.setWebsite(website);
             return model;
         }
+    }
+
+    @Override
+    public void onTakePhoto() {
+        checkPermissionAddPhoto(true);
+    }
+
+    @Override
+    public void onPickFormGallery() {
+        checkPermissionAddPhoto(false);
+    }
+
+    private void checkPermissionAddPhoto(final boolean isTakePhoto) {
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (!hasDeniedPermission(report)) {
+                            if (isTakePhoto) {
+                                intentToTakePhoto();
+                            } else {
+                                intentToPickFromGallery();
+                            }
+                        } else {
+                            Toast.makeText(FormContactActivity.this, R.string.permission_denied, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+
+                    private boolean hasDeniedPermission(MultiplePermissionsReport report) {
+                        List<PermissionDeniedResponse> denyPermission = report.getDeniedPermissionResponses();
+                        return denyPermission != null && denyPermission.size() > 0;
+                    }
+                }).check();
+    }
+
+    private void intentToTakePhoto() {
+
+    }
+
+    private void intentToPickFromGallery() {
+
     }
 }

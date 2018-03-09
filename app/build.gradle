@@ -41,4 +41,7 @@ dependencies {
 
     // image circle
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    // request permission
+    implementation 'com.karumi:dexter:4.2.0'
 }
