@@ -56,8 +56,8 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
     private ImageView imgProfile;
 
     private boolean isModeEdit;
-    private String lat ;
-    private String lng ;
+    private String lat;
+    private String lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,7 +201,7 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
     }
 
     private void checkLocation(final ContactModel model) {
-        if (lat.trim().length() != 0 && lng.trim().length() != 0) {
+        if (lat != null && lng != null) {
             model.setLat(lat);
             model.setLng(lng);
             Location location = new Location("loc");

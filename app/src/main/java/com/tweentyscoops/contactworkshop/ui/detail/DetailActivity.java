@@ -32,7 +32,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         setupInstance();
         setupView();
-        initData(model);
+        initData();
     }
 
     private void setupInstance() {
@@ -61,8 +61,8 @@ public class DetailActivity extends AppCompatActivity {
         tvWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this , WebViewActivity.class);
-                intent.putExtra(WebViewActivity.KEY_WEB_VIEW , tvWebsite.getText().toString());
+                Intent intent = new Intent(DetailActivity.this, WebViewActivity.class);
+                intent.putExtra(WebViewActivity.KEY_WEB_VIEW, tvWebsite.getText().toString());
                 startActivity(intent);
             }
         });
@@ -78,7 +78,7 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    private void initData(ContactModel model) {
+    private void initData() {
         tvName.setText(model.getName());
         tvTel.setText(model.getPhoneNumber());
         tvEmail.setText(model.getEmail());
@@ -94,12 +94,20 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(MainActivity.KEY_CONTACT_MODEL, model);
+        setResult(RESULT_OK, intent);
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_EDIT && resultCode == RESULT_OK) {
-            ContactModel model = data.getParcelableExtra(MainActivity.KEY_CONTACT_MODEL);
+            model = data.getParcelableExtra(MainActivity.KEY_CONTACT_MODEL);
             if (model != null) {
-                initData(model);
+                initData();
             }
         }
     }
