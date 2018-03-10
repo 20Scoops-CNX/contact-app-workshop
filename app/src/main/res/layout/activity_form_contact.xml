@@ -79,6 +79,12 @@
             android:layout_marginTop="16dp"
             android:text="@string/getlocation" />
 
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnSubmit"
             android:layout_width="match_parent"

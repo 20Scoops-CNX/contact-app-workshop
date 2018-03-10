@@ -12,6 +12,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -54,10 +55,12 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
     private TextInputEditText etEmail;
     private TextInputEditText etWebsite;
     private ImageView imgProfile;
+    private AppCompatTextView tvAddress;
 
     private boolean isModeEdit;
     private String lat;
     private String lng;
+    private String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,7 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
             getSupportActionBar().setTitle(R.string.create_contact);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        tvAddress = findViewById(R.id.tvAddress);
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
@@ -154,7 +158,9 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
             model.setWebsite(website);
             // TODO : get url image before upload image
             model.setImageUrl("");
-            checkLocation(model);
+            model.setAddress(address);
+            model.setLat(lat);
+            model.setLng(lng);
             return model;
         }
     }
@@ -197,30 +203,30 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
         if (requestCode == REQUEST_CODE_ADD_LOCATION && resultCode == RESULT_OK) {
             lat = data.getStringExtra(MapActivity.KEY_LOCATION_LAT);
             lng = data.getStringExtra(MapActivity.KEY_LOCATION_LNG);
+            checkLocation();
         }
     }
 
-    private void checkLocation(final ContactModel model) {
+    private void checkLocation() {
         if (lat != null && lng != null) {
-            model.setLat(lat);
-            model.setLng(lng);
             Location location = new Location("loc");
             location.setLatitude(Double.parseDouble(lat));
             location.setLongitude(Double.parseDouble(lng));
             LocationUtil.reverseGeocoding(this, location, new LocationUtil.ReverseGeocodingCallback() {
                 @Override
                 public void onReverseSuccess(String address) {
-                    model.setAddress(address);
+                    FormContactActivity.this.address = address;
                 }
 
                 @Override
                 public void onReverseError() {
-                    model.setAddress("-");
+                    address = "-";
                 }
             });
         } else {
-            model.setAddress("-");
+            address = "-";
         }
+        tvAddress.setText(address);
     }
 
     private void checkPermissionAddPhoto(final boolean isTakePhoto) {
