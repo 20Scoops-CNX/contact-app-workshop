@@ -30,5 +30,6 @@
     <string name="fill_tel">Telephone:</string>
     <string name="fill_email">E-mail:</string>
     <string name="fill_website">Website:</string>
+    <string name="fill_address">Address:</string>
     <string name="facebook_app_id">1892303904114046</string>
 </resources>

@@ -5,22 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         tools:context="com.tweentyscoops.contactworkshop.ui.detail.DetailActivity">
-        <ImageView
-            android:id="@+id/tvEdt"
-            android:layout_marginRight="5dp"
-            android:padding="5dp"
-            android:layout_gravity="right"
-            android:src="@drawable/pen_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="5dp"
-            tools:ignore="ContentDescription,RtlHardcoded" />
+
         <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
             android:id="@+id/imgDetailProfile"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -30,101 +22,130 @@
             app:civ_border_color="@android:color/darker_gray"
             app:civ_border_width="2dp" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="@string/fill_name"
-                android:layout_marginTop="20dp"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:gravity="center"
-                android:padding="2dp"
-                android:id="@+id/tvDetailName"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="25sp" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/tvEdt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="right"
+            android:padding="5dp"
+            android:src="@drawable/pen_icon"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="25dp"
+            android:layout_below="@+id/imgDetailProfile"
+            android:text="@string/fill_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp" />
+
+         <TextView
+             android:layout_marginLeft="113dp"
+             android:layout_marginTop="20dp"
+             android:layout_below="@+id/imgDetailProfile"
+             tools:text="text"
+             android:id="@+id/tvDetailName"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="113dp" />
+
+          <TextView
+              android:id="@+id/titleTal"
+              android:layout_marginTop="20dp"
+              android:layout_marginLeft="25dp"
+              android:layout_below="@+id/tvDetailName"
+              android:text="@string/fill_tel"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="25dp" />
+
+        <TextView
+            android:layout_below="@+id/tvDetailName"
+            android:layout_alignLeft="@+id/titleTal"
+            android:layout_marginLeft="90dp"
+            android:layout_marginTop="20dp"
+            tools:text="text"
+            android:id="@+id/tvDetailTel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/titleTal"
+            android:layout_marginStart="90dp" />
 
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="@string/fill_tel"
-                android:layout_marginTop="20dp"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:gravity="center"
-                android:padding="2dp"
-                android:id="@+id/tvDetailTel"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="20sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/titleEmail"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="25dp"
+            android:layout_below="@+id/tvDetailTel"
+            android:text="@string/fill_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="@string/fill_email"
-                android:layout_marginTop="20dp"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:gravity="center"
-                android:padding="2dp"
-                android:id="@+id/tvDetailEmail"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="25sp" />
-        </LinearLayout>
+        <TextView
+            android:layout_below="@+id/tvDetailTel"
+            android:layout_alignLeft="@+id/titleEmail"
+            android:layout_marginLeft="90dp"
+            android:layout_marginTop="20dp"
+            tools:text="text"
+            android:id="@+id/tvDetailEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/titleEmail"
+            android:layout_marginStart="90dp" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="@string/fill_website"
-                android:layout_marginTop="20dp"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:gravity="center"
-                android:padding="2dp"
-                android:id="@+id/tvDetailWebsite"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="25sp" />
-        </LinearLayout>
 
+        <TextView
+            android:id="@+id/titleWeb"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="25dp"
+            android:layout_below="@+id/tvDetailEmail"
+            android:text="@string/fill_website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp" />
+
+        <TextView
+            android:layout_below="@+id/tvDetailEmail"
+            android:layout_alignLeft="@+id/titleWeb"
+            android:layout_marginLeft="90dp"
+            android:layout_marginTop="20dp"
+            tools:text="text"
+            android:id="@+id/tvDetailWebsite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/titleWeb"
+            android:layout_marginStart="90dp" />
+
+
+        <TextView
+            android:id="@+id/titleAddress"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="25dp"
+            android:layout_below="@+id/tvDetailWebsite"
+            android:text="@string/fill_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp" />
+
+        <TextView
+            android:layout_below="@+id/tvDetailWebsite"
+            android:layout_alignLeft="@+id/titleWeb"
+            android:layout_marginLeft="90dp"
+            android:layout_marginTop="20dp"
+            tools:text="text"
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/titleWeb"
+            android:layout_marginStart="90dp" />
 
         <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/tvAddress"
             android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="300dp">
@@ -141,5 +162,5 @@
                 android:layout_height="50dp"
                 tools:ignore="ContentDescription" />
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

@@ -22,7 +22,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final int REQUEST_EDIT = 1005;
 
-    private TextView tvName, tvTel, tvEmail, tvWebsite;
+    private TextView tvName, tvTel, tvEmail, tvWebsite,tvAddress;
     private ImageView ivMap;
     private ContactModel model;
 
@@ -49,6 +49,7 @@ public class DetailActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvDetailEmail);
         tvWebsite = findViewById(R.id.tvDetailWebsite);
         ivMap = findViewById(R.id.ivMap);
+        tvAddress=findViewById(R.id.tvAddress);
 
         tvTel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +84,7 @@ public class DetailActivity extends AppCompatActivity {
         tvTel.setText(model.getPhoneNumber());
         tvEmail.setText(model.getEmail());
         tvWebsite.setText(model.getWebsite());
+        tvAddress.setText(model.getAddress());
         ImageLoader.url(ivMap, "http://maps.google.com/maps/api/staticmap?center=" +
                 this.model.getLat() + "," + this.model.getLng() + "&zoom=14&size=300x300&sensor=false");
     }
