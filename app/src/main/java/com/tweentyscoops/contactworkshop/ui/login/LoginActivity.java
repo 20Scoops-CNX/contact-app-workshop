@@ -1,6 +1,7 @@
 package com.tweentyscoops.contactworkshop.ui.login;
 
 import android.content.Intent;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView textRegister;
     private LoginButton btnLogin;
     private CallbackManager callbackManager;
-    private EditText editTextEmail, editTextPassword;
+    private TextInputEditText editTextEmail;
+    private TextInputEditText editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         btnLogin = (LoginButton) findViewById(R.id.login_fb);
         editTextEmail = findViewById(R.id.signup_input_email);
-        editTextPassword = findViewById(R.id.signup_input_Repassword);
+        editTextPassword = findViewById(R.id.signup_input_password);
     }
 
     @Override
@@ -110,12 +112,15 @@ public class LoginActivity extends AppCompatActivity {
     private void setcheckLoginFacebook() {}
 
     private void handleField(){
-        if (editTextEmail.getText().toString().trim().length() == 0) {
+        String email=editTextEmail.getText().toString();
+        String password=editTextPassword.getText().toString();
+        if (email.trim().length() == 0) {
             DialogUtil.showDialogMessage(this , R.string.check_email);
-        } else if (editTextPassword.getText().toString().trim().length() == 0) {
+        } else if (password.trim().length() == 0) {
             DialogUtil.showDialogMessage(this, R.string.check_password);
         } else {
-            //TODO checkLoginEmail
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
         }
     }
 }
