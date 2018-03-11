@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.tweentyscoops.contactworkshop.R;
 import com.tweentyscoops.contactworkshop.model.ContactModel;
 import com.tweentyscoops.contactworkshop.ui.detail.DetailActivity;
 import com.tweentyscoops.contactworkshop.ui.form.FormContactActivity;
 import com.tweentyscoops.contactworkshop.ui.home.adapter.ContactAdapter;
+import com.tweentyscoops.contactworkshop.utils.DialogUtil;
 
 public class MainActivity extends AppCompatActivity implements ContactAdapter.ContactAdapterListener {
 
@@ -92,6 +92,6 @@ public class MainActivity extends AppCompatActivity implements ContactAdapter.Co
     }
 
     public void onBackPressed() {
-        finish();
+        DialogUtil.showDialogMessageLogout(this, R.string.messageLogout);
     }
 }

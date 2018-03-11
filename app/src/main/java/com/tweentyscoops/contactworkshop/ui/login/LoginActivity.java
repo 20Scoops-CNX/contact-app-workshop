@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -19,13 +17,19 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.tweentyscoops.contactworkshop.R;
+import com.tweentyscoops.contactworkshop.http.ContactApi;
+import com.tweentyscoops.contactworkshop.model.UserModel;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
 import com.tweentyscoops.contactworkshop.ui.register.RegisterActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Arrays;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     private Button buttonLoginEmail;
@@ -119,8 +123,34 @@ public class LoginActivity extends AppCompatActivity {
         } else if (password.trim().length() == 0) {
             DialogUtil.showDialogMessage(this, R.string.check_password);
         } else {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            UserModel user=new UserModel(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
+            setPostLoginEmail(user);
         }
     }
+
+    private void  setPostLoginEmail(UserModel user){
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8000/api/")
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+        ContactApi client = retrofit.create(ContactApi.class);
+        Call<UserModel> call=client.loginEmail(user);
+        call.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                String responseLogin=response.body().getSuccess();
+                if(responseLogin.equals("true")){
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(getApplication(),"no Success"+response.body().getSuccess(), Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                Log.e("onError","onError"+t.getLocalizedMessage());
+            }
+        });
+    }
+
 }
