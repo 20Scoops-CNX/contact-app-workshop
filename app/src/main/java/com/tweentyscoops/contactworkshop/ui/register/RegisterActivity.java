@@ -1,14 +1,16 @@
 package com.tweentyscoops.contactworkshop.ui.register;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+
 import com.tweentyscoops.contactworkshop.R;
 import com.tweentyscoops.contactworkshop.http.ContactApi;
-import com.tweentyscoops.contactworkshop.model.UserModel;
+import com.tweentyscoops.contactworkshop.model.ResponseApi;
+import com.tweentyscoops.contactworkshop.ui.login.LoginActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
     private void handleField(){
+        String email=editTextEmail.getText().toString();
+        String password=editTextPassword.getText().toString();
         if (editTextEmail.getText().toString().trim().length() == 0) {
             DialogUtil.showDialogMessage(this , R.string.check_email);
         } else if (editTextPassword.getText().toString().trim().length() == 0) {
@@ -49,31 +53,37 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (!editTextPassword.getText().toString().equals(editTextRePassword.getText().toString())) {
             DialogUtil.showDialogMessage(this, R.string.check_RePassword);
         } else {
-            UserModel user=new UserModel(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
-            setPostRegister(user);
+            setPostRegister(email , password);
         }
     }
 
-    private void  setPostRegister(UserModel user){
-        Retrofit.Builder builder = new Retrofit.Builder()
+     private void handleRegister(){
+         DialogUtil.showDialogMessage(this , R.string.register_error);
+     }
+
+    private void  setPostRegister(String username , String password){
+    Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8000/api/")
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         ContactApi client = retrofit.create(ContactApi.class);
-        Call<UserModel> call=client.crataRegister(user);
-        call.enqueue(new Callback<UserModel>() {
+        Call<ResponseApi> call=client.crataRegister(username , password);
+        call.enqueue(new Callback<ResponseApi>() {
+
             @Override
-            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                String responseRegister=response.body().getSuccess();
-                if(responseRegister.equals("true")){
-                    Toast.makeText(getApplication(),"Register Success", Toast.LENGTH_LONG).show();
+            public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
+                Log.e("response ",response.body().getSuccess());
+                String success=response.body().getSuccess();
+                if(success.equals("false")){
+                    handleRegister();
                 }else {
-                    Toast.makeText(getApplication(),"no Success"+response.body().getSuccess(), Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
             }
             @Override
-            public void onFailure(Call<UserModel> call, Throwable t) {
-                Log.e("onError","onError"+t.getLocalizedMessage());
+            public void onFailure(Call<ResponseApi> call, Throwable t) {
+                Log.e("error ",t.getMessage());
             }
         });
     }

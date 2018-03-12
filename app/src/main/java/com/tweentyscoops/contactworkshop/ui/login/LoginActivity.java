@@ -18,7 +18,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.tweentyscoops.contactworkshop.R;
 import com.tweentyscoops.contactworkshop.http.ContactApi;
-import com.tweentyscoops.contactworkshop.model.UserModel;
+import com.tweentyscoops.contactworkshop.model.ResponseApi;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
 import com.tweentyscoops.contactworkshop.ui.register.RegisterActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
@@ -123,34 +123,37 @@ public class LoginActivity extends AppCompatActivity {
         } else if (password.trim().length() == 0) {
             DialogUtil.showDialogMessage(this, R.string.check_password);
         } else {
-            UserModel user=new UserModel(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
-            setPostLoginEmail(user);
+            setPostLoginEmail(email , password);
         }
     }
 
-    private void  setPostLoginEmail(UserModel user){
+    private void handleLoginEmail(){
+        DialogUtil.showDialogMessage(this , R.string.register_error);
+    }
+
+    private void  setPostLoginEmail(String username , String password){
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8000/api/")
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         ContactApi client = retrofit.create(ContactApi.class);
-        Call<UserModel> call=client.loginEmail(user);
-        call.enqueue(new Callback<UserModel>() {
+        Call<ResponseApi> call=client.login(username , password);
+        call.enqueue(new Callback<ResponseApi>() {
             @Override
-            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                String responseLogin=response.body().getSuccess();
-                if(responseLogin.equals("true")){
+            public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
+                Log.e("response ",response.body().getSuccess());
+                String success=response.body().getSuccess();
+                if(success.equals("false")){
+                    handleLoginEmail();
+                }else {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
-                }else {
-                    Toast.makeText(getApplication(),"no Success"+response.body().getSuccess(), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
-            public void onFailure(Call<UserModel> call, Throwable t) {
-                Log.e("onError","onError"+t.getLocalizedMessage());
+            public void onFailure(Call<ResponseApi> call, Throwable t) {
+                Log.e("error ",t.getMessage());
             }
         });
     }
-
 }
