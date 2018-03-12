@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -19,13 +17,19 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.tweentyscoops.contactworkshop.R;
+import com.tweentyscoops.contactworkshop.http.ContactApi;
+import com.tweentyscoops.contactworkshop.model.ResponseApi;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
 import com.tweentyscoops.contactworkshop.ui.register.RegisterActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Arrays;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     private Button buttonLoginEmail;
@@ -119,8 +123,37 @@ public class LoginActivity extends AppCompatActivity {
         } else if (password.trim().length() == 0) {
             DialogUtil.showDialogMessage(this, R.string.check_password);
         } else {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            setPostLoginEmail(email , password);
         }
+    }
+
+    private void handleLoginEmail(){
+        DialogUtil.showDialogMessage(this , R.string.register_error);
+    }
+
+    private void  setPostLoginEmail(String username , String password){
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8000/api/")
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+        ContactApi client = retrofit.create(ContactApi.class);
+        Call<ResponseApi> call=client.login(username , password);
+        call.enqueue(new Callback<ResponseApi>() {
+            @Override
+            public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
+                Log.e("response ",response.body().getSuccess());
+                String success=response.body().getSuccess();
+                if(success.equals("false")){
+                    handleLoginEmail();
+                }else {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseApi> call, Throwable t) {
+                Log.e("error ",t.getMessage());
+            }
+        });
     }
 }

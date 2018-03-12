@@ -18,11 +18,13 @@
         android:layout_below="@+id/textAppName"
         android:id="@+id/signup_input_layout_email"
         android:layout_width="350dp"
+        android:inputType="text"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp">
         <android.support.design.widget.TextInputEditText
             android:id="@+id/signup_input_email"
+            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

@@ -1,4 +1,3 @@
 package com.tweentyscoops.contactworkshop.repository;
 
-public class LoginRepository {
-}
+public class LoginRepository {}

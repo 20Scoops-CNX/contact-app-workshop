@@ -6,6 +6,7 @@
     <string name="website">Website</string>
     <string name="submit">submit</string>
     <string name="error">Error</string>
+    <string name="logout">Logout</string>
     <string name="ok">OK</string>
     <string name="require_field_name">Require field name</string>
     <string name="require_field_email">Require field email</string>
@@ -22,9 +23,12 @@
     <string name="cancel">CANCEL</string>
     <string name="login_email">Login</string>
     <string name="check_email">Check Email</string>
+    <string name="register_error">Register Error</string>
+    <string name="login_error">Login_error</string>
     <string name="check_password">Check Password</string>
     <string name="register">Register</string>
     <string name="check_RePassword">Check Re-Password</string>
+    <string name="messageLogout">Would you like to logout?</string>
     <string name="detail">Web</string>
     <string name="fill_name">Name :</string>
     <string name="fill_tel">Telephone:</string>
@@ -32,4 +36,7 @@
     <string name="fill_website">Website:</string>
     <string name="fill_address">Address:</string>
     <string name="facebook_app_id">1892303904114046</string>
+    <string name="password">password</string>
+    <string name="re_password">Re-password</string>
+    <string name="submit_register">Submit</string>
 </resources>
