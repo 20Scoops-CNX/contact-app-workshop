@@ -24,9 +24,7 @@ public class ContactModel implements Parcelable {
     @SerializedName("address")
     private String address;
 
-    public ContactModel() {
-
-    }
+    public ContactModel() {}
 
     protected ContactModel(Parcel in) {
         name = in.readString();
