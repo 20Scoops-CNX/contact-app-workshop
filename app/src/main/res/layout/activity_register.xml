@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.register.RegisterActivity">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_below="@+id/toolBar"
+        android:id="@+id/signup_input_layout_email"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+        <EditText
+            android:inputType="textEmailAddress"
+            android:id="@+id/signup_input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/email"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_below="@+id/signup_input_layout_email"
+        android:id="@+id/signup_input_layout_password"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+        <EditText
+            android:id="@+id/signup_input_password"
+            android:layout_width="match_parent"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/password"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_below="@+id/signup_input_layout_password"
+        android:id="@+id/signup_input_layout_Repassword"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+        <EditText
+            android:id="@+id/signup_input_Repassword"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/re_password"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:textAllCaps="false"
+        android:layout_marginTop="30dp"
+        android:id="@+id/btnSummit"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/signup_input_layout_Repassword"
+        android:layout_centerHorizontal="true"
+        android:text="@string/submit_register" />
+
+</RelativeLayout>
