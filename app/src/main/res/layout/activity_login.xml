@@ -72,4 +72,5 @@
         android:layout_below="@+id/loginEmail"
         android:layout_width="350dp"
         android:layout_height="wrap_content"  />
+
 </RelativeLayout>
