@@ -28,6 +28,12 @@ public class RegisterActivity extends AppCompatActivity {
         setupView();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     private void setupView() {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.register);

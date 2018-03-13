@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
-
+import android.webkit.WebViewClient;
 import com.tweentyscoops.contactworkshop.R;
 
 @SuppressLint("Registered")
@@ -16,6 +16,7 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         setupView();
+        setupWebView();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -24,10 +25,20 @@ public class WebViewActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.detail);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    private void setupWebView() {
         String url = getIntent().getExtras().getString(KEY_WEB_VIEW);
         Log.e("url " ,url);
-        WebView WebViw = findViewById(R.id.webView);
-        WebViw.getSettings().setJavaScriptEnabled(true);
-        WebViw.loadUrl("http://"+url);
+        WebView webViw = findViewById(R.id.webView);
+        webViw.setWebViewClient(new WebViewClient());
+        webViw.getSettings().setJavaScriptEnabled(true);
+        webViw.loadUrl("http://"+url);
     }
 }

@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Email"/>
+            android:hint="@string/email"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -44,7 +44,7 @@
             android:inputType="textPassword"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="password"/>
+            android:hint="@string/password"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -52,7 +52,7 @@
         android:layout_marginTop="280dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/textAppName"
-        android:text="login Email"
+        android:text="@string/login_email"
         android:layout_width="350dp"
         android:layout_height="wrap_content" />
 
@@ -61,7 +61,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/login_fb"
         android:id="@+id/register"
-        android:text="Register"
+        android:text="@string/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
