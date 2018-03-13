@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void  setPostLoginEmail(String username , String password){
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8000/api/")
+                .baseUrl("http://10.8.14.110:330/contact-api-workshop/public/api/")
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         ContactApi client = retrofit.create(ContactApi.class);
