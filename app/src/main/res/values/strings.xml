@@ -39,4 +39,5 @@
     <string name="password">password</string>
     <string name="re_password">Re-password</string>
     <string name="submit_register">Submit</string>
-    </resources>
+    <string name="text_name">Appname</string>
+</resources>

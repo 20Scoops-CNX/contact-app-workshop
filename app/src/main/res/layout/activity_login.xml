@@ -7,10 +7,10 @@
 
     <TextView
         android:id="@+id/textAppName"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
-        android:text="Appname"
+        android:text="@string/text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -70,9 +70,6 @@
         android:id="@+id/login_fb"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/loginEmail"
-        android:text="login Facebook"
         android:layout_width="350dp"
         android:layout_height="wrap_content"  />
-
-
 </RelativeLayout>
