@@ -19,7 +19,7 @@ public class HttpConnection {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl("http://846df25d.ngrok.io/contact-api-workshop/public/api/")
                 .client(httpClient.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

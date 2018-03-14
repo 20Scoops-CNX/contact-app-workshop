@@ -101,7 +101,7 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
         findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO : request APIs insert/update contact
+                // TODO 2 : request APIs insert/update contact
                 ContactModel model = getContactModel();
                 if (model != null) {
                     Intent intent = new Intent();
@@ -156,7 +156,7 @@ public class FormContactActivity extends AppCompatActivity implements DialogUtil
             model.setPhoneNumber(phoneNumber);
             model.setEmail(email);
             model.setWebsite(website);
-            // TODO : get url image before upload image
+            // TODO 1 : get url image before upload image
             model.setImageUrl("");
             model.setAddress(address);
             model.setLat(lat);

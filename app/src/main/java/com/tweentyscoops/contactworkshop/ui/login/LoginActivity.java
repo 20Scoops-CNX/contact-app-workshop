@@ -1,14 +1,14 @@
 package com.tweentyscoops.contactworkshop.ui.login;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -17,19 +17,20 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.tweentyscoops.contactworkshop.R;
-import com.tweentyscoops.contactworkshop.http.ContactApi;
+import com.tweentyscoops.contactworkshop.http.HttpConnection;
 import com.tweentyscoops.contactworkshop.model.ResponseApi;
 import com.tweentyscoops.contactworkshop.ui.home.MainActivity;
 import com.tweentyscoops.contactworkshop.ui.register.RegisterActivity;
 import com.tweentyscoops.contactworkshop.utils.DialogUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.Arrays;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     private Button buttonLoginEmail;
@@ -64,16 +65,19 @@ public class LoginActivity extends AppCompatActivity {
                             String str_email = jsonObject.getString("email");
                             Toast.makeText(LoginActivity.this, str_email, Toast.LENGTH_LONG).show();
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-                        Log.i("user", jsonObject.toString());
                     }
                 });
                 request.setParameters(parameters);
                 request.executeAsync();
             }
+
             @Override
-            public void onCancel() {}
+            public void onCancel() {
+
+            }
+
             @Override
             public void onError(FacebookException e) {
                 Toast.makeText(LoginActivity.this, "Error " + e, Toast.LENGTH_SHORT).show();
@@ -98,10 +102,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setID() {
-        buttonLoginEmail = (Button) findViewById(R.id.loginEmail);
-        textRegister = (TextView) findViewById(R.id.register);
+        buttonLoginEmail = findViewById(R.id.loginEmail);
+        textRegister = findViewById(R.id.register);
         callbackManager = CallbackManager.Factory.create();
-        btnLogin = (LoginButton) findViewById(R.id.login_fb);
+        btnLogin = findViewById(R.id.login_fb);
         editTextEmail = findViewById(R.id.signup_input_email);
         editTextPassword = findViewById(R.id.signup_input_password);
     }
@@ -113,46 +117,40 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //TODO checkLoginFacebook retrofit()
-    private void setcheckLoginFacebook() {}
+    private void setcheckLoginFacebook() {
+    }
 
-    private void handleField(){
-        String email=editTextEmail.getText().toString();
-        String password=editTextPassword.getText().toString();
+    private void handleField() {
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
         if (email.trim().length() == 0) {
-            DialogUtil.showDialogMessage(this , R.string.check_email);
+            DialogUtil.showDialogMessage(this, R.string.check_email);
         } else if (password.trim().length() == 0) {
             DialogUtil.showDialogMessage(this, R.string.check_password);
         } else {
-            setPostLoginEmail(email , password);
+            setPostLoginEmail(email, password);
         }
     }
 
-    private void handleLoginEmail(){
-        DialogUtil.showDialogMessage(this , R.string.register_error);
+    private void handleLoginEmail() {
+        DialogUtil.showDialogMessage(this, R.string.register_error);
     }
 
-    private void  setPostLoginEmail(String username , String password){
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://10.8.14.110:330/contact-api-workshop/public/api/")
-                .addConverterFactory(GsonConverterFactory.create());
-        Retrofit retrofit = builder.build();
-        ContactApi client = retrofit.create(ContactApi.class);
-        Call<ResponseApi> call=client.login(username , password);
-        call.enqueue(new Callback<ResponseApi>() {
+    private void setPostLoginEmail(String username, String password) {
+        HttpConnection.request().login(username, password).enqueue(new Callback<ResponseApi>() {
             @Override
             public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
-                Log.e("response ",response.body().getSuccess());
-                String success=response.body().getSuccess();
-                if(success.equals("false")){
+                if (response.isSuccessful() && response.body().getSuccess()) {
                     handleLoginEmail();
-                }else {
+                } else {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseApi> call, Throwable t) {
-                Log.e("error ",t.getMessage());
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
