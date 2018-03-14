@@ -33,6 +33,7 @@ public class WebViewActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
         String url = getIntent().getExtras().getString(KEY_WEB_VIEW);
         Log.e("url " ,url);
